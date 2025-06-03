@@ -27,84 +27,53 @@
         */
 
 const tempState = {
-    tempDisplay: 70
+    currentTemp: 70
 };
 
-const renderTemp = () => {
-        const temp = document.getElementById("temp-number");
-        temp = tempDisplay.textContent;
-        temp.textContent = tempState.tempDisplay;
-        updateTempColor();
-    };    
+const updateTempColor = (temp) => {
+    const tempAsInt = parseInt(tempState.currentTemp)
+    // const tempColor = document.getElementById("temp-number");
+
+    if (tempAsInt >= 80) {
+        temp.style.color = "red";
+    } else if (tempAsInt >= 70) {
+        temp.style.color = "orange";
+    } else if (tempAsInt >= 60) {
+        temp.style.color = "yellow";
+    } else if (tempAsInt >= 50) {
+        temp.style.color = "green";
+    } else {
+        temp.style.color = "teal";
+    }
+};
+
+const renderTemp = (temp) => {
+    temp.textContent = tempState.currentTemp;
+    updateTempColor(temp);
+    };
 
 const registerEventHandler = () => {
     // Get references to DOM elements
-    const tempDisplay = document.getElementById("temp-number");
+    const temp = document.getElementById("temp-number");
     const increaseBtn = document.getElementById("increase-temp");
     const decreaseBtn = document.getElementById("decrease-temp");
-    
-    // Parse initial temperature with default = 70
-    let temp = parseInt(tempDisplay.textContent) || 70;  // if itemp is integer
-    tempDisplay.textContent = temp;
-    // tempDisplay.style.color = "orange"; // as a test
 
-    // Temperature Color Code
-    const updateTempColor = () => {
-        if (temp >= 80) {
-            tempDisplay.style.color = "red";
-        } else if (temp >= 70) {
-            tempDisplay.style.color = "orange";
-        } else if (temp >= 60) {
-            tempDisplay.style.color = "yellow";
-        } else if (temp >= 50) {
-            tempDisplay.style.color = "green";
-        } else {
-            tempDisplay.style.color = "teal";
-        }
-    };
-    
-    
-    
     // Increase temperature
     increaseBtn.addEventListener("click", () => {
-        temp += 1;
-        // tempDisplay.textContent = temp;
-        renderTemp();
+        tempState.currentTemp += 1;
+        renderTemp(temp);
     });
     
     // Decrease temperature
     decreaseBtn.addEventListener("click", () => {
-        temp -= 1;
-        // tempDisplay.textContent = temp;
-        renderTemp();
+        tempState.currentTemp -= 1;
+        renderTemp(temp);
     });
-    
-    // Set initial color
-    updateTempColor();
+
+    // Display temperature
+    renderTemp(temp);
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandler); 
 
 
-
-// const increaseTempBtn = () => {
-//     const temperature = document.getElementById('temp-number');
-//     tempState.tempDisplay += 1;
-//     temperature.textContent = tempState.tempDisplay;
-// }
-
-// const decreaseTempBtn = () => {
-//     const temperature = document.getElementById('temp-number');
-//     tempState.tempDisplay -= 1;
-//     temperature.textContent = tempState.tempDisplay;
-// }
-
-// const registerEventHandlers = () => {
-//     increaseBtn = document.getElementById('increase-temp');
-//     increaseBtn.addEventListener('click', increaseTempBtn)
-
-//     decreaseBtn = document.getElementById('decrease-temp');
-//     decreaseBtn.addEventListener('click', decreaseTempBtn)
-// }
-
-// document.addEventListener('DOMContentLoaded', registerEventHandlers);
