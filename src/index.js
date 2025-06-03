@@ -26,6 +26,16 @@
         use switch for colors
         */
 
+const tempState = {
+    tempDisplay: 70
+};
+
+const renderTemp = () => {
+        const temp = document.getElementById("temp-number");
+        temp = tempDisplay.textContent;
+        temp.textContent = tempState.tempDisplay;
+        updateTempColor();
+    };    
 
 const registerEventHandler = () => {
     // Get references to DOM elements
@@ -53,10 +63,7 @@ const registerEventHandler = () => {
         }
     };
     
-    const renderTemp = () => {
-        tempDisplay.textContent = temp;
-        updateTempColor();
-    };    
+    
     
     // Increase temperature
     increaseBtn.addEventListener("click", () => {
@@ -77,3 +84,27 @@ const registerEventHandler = () => {
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandler); 
+
+
+
+// const increaseTempBtn = () => {
+//     const temperature = document.getElementById('temp-number');
+//     tempState.tempDisplay += 1;
+//     temperature.textContent = tempState.tempDisplay;
+// }
+
+// const decreaseTempBtn = () => {
+//     const temperature = document.getElementById('temp-number');
+//     tempState.tempDisplay -= 1;
+//     temperature.textContent = tempState.tempDisplay;
+// }
+
+// const registerEventHandlers = () => {
+//     increaseBtn = document.getElementById('increase-temp');
+//     increaseBtn.addEventListener('click', increaseTempBtn)
+
+//     decreaseBtn = document.getElementById('decrease-temp');
+//     decreaseBtn.addEventListener('click', decreaseTempBtn)
+// }
+
+// document.addEventListener('DOMContentLoaded', registerEventHandlers);
