@@ -25,15 +25,55 @@
         variables: increase, decrease, temperature, color
         use switch for colors
         */
-const weather_report = () => {
-    CONST RED_LIMIT = 80
-    CONST ORANGE_LIMIT = 79
-    CONST YELLOW_LIMIT = 69
-    CONST GREEN_LIMIT = 59
-    CONST TEAL_LIMIT = 49
 
+
+const registerEventHandler = () => {
+    // Get references to DOM elements
+    const tempDisplay = document.getElementById("temp-number");
+    const increaseBtn = document.getElementById("increase-temp");
+    const decreaseBtn = document.getElementById("decrease-temp");
     
+    // Parse initial temperature with default = 70
+    let temp = parseInt(tempDisplay.textContent) || 70;  // if itemp is integer
+    tempDisplay.textContent = temp;
+    // tempDisplay.style.color = "orange"; // as a test
 
-    // "orange" if 70 <= temperature >=79 else None  
-}
+    // Temperature Color Code
+    const updateTempColor = () => {
+        if (temp >= 80) {
+            tempDisplay.style.color = "red";
+        } else if (temp >= 70) {
+            tempDisplay.style.color = "orange";
+        } else if (temp >= 60) {
+            tempDisplay.style.color = "yellow";
+        } else if (temp >= 50) {
+            tempDisplay.style.color = "green";
+        } else {
+            tempDisplay.style.color = "teal";
+        }
+    };
+    
+    const renderTemp = () => {
+        tempDisplay.textContent = temp;
+        updateTempColor();
+    };    
+    
+    // Increase temperature
+    increaseBtn.addEventListener("click", () => {
+        temp += 1;
+        // tempDisplay.textContent = temp;
+        renderTemp();
+    });
+    
+    // Decrease temperature
+    decreaseBtn.addEventListener("click", () => {
+        temp -= 1;
+        // tempDisplay.textContent = temp;
+        renderTemp();
+    });
+    
+    // Set initial color
+    updateTempColor();
+};
 
+document.addEventListener("DOMContentLoaded", registerEventHandler); 
