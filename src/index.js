@@ -30,7 +30,8 @@ const tempState = {
     currentTemp: 70
 };
 
-const updateTempColor = (temp) => {
+// Can be refactored to have 2 arguements (tempDisplay => color render, temp => ranges)
+const updateTempColor = (temp) => {   
     const tempAsInt = parseInt(tempState.currentTemp)
     // const tempColor = document.getElementById("temp-number");
 
@@ -47,12 +48,13 @@ const updateTempColor = (temp) => {
     }
 };
 
+// Refactor to have 2 arguement (tempDisplay, temp)
 const renderTemp = (temp) => {
     temp.textContent = tempState.currentTemp;
     updateTempColor(temp);
     };
 
-const registerEventHandler = () => {
+const setupTemperatureControls = () => {
     // Get references to DOM elements
     const temp = document.getElementById("temp-number");
     const increaseBtn = document.getElementById("increase-temp");
@@ -74,6 +76,16 @@ const registerEventHandler = () => {
     renderTemp(temp);
 };
 
+////////////////////////////////
+////////// WAVE 03 /////////////
+////////////////////////////////
+
+const setupCityNameControls = () => {};
+
+
+const registerEventHandler = () => {
+    setupTemperatureControls();
+    setupCityNameControls();
+};
+
 document.addEventListener("DOMContentLoaded", registerEventHandler); 
-
-
