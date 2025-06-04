@@ -1,18 +1,18 @@
 "user strict"
-    // Landscape image should update 
-    //     Temperature (F)	Landscape
-    //     80+	"🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂"
-    //     70-79	"🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷"
-    //     60-69	"🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃"
-    //     59 or below	"🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲"
 
-const tempState = {
-    currentTemp: 70
+// define a state variable that tracks all the values we need in the code
+const state = {  // call it state and add city name here
+    currentTemp: 70,
+    city: 'Seattle'
 };
+
+// Get references to DOM elements 
+
+
 
 // Can be refactored to have 2 arguements (tempDisplay => color render, temp => ranges)
 const updateTempColor = (temp) => {   
-    const tempAsInt = parseInt(tempState.currentTemp)
+    const tempAsInt = parseInt(state.currentTemp)
 
     if (tempAsInt >= 80) {
         temp.style.color = "red";
@@ -28,7 +28,7 @@ const updateTempColor = (temp) => {
 };
 
 const updateLandscape = (temp) => {
-    const tempAsInt = parseInt(tempState.currentTemp)
+    const tempAsInt = parseInt(state.currentTemp)
     const landscape = document.getElementById('landscape')
     if (tempAsInt >= 80) {
         landscape.textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
@@ -43,29 +43,44 @@ const updateLandscape = (temp) => {
 
 // Refactor to have 2 arguement (tempDisplay, temp)
 const renderTemp = (temp) => {
-    temp.textContent = tempState.currentTemp;
-    updateTempColor(temp);
-    updateLandscape(temp);
-    };
+        temp.textContent = state.currentTemp;
+        updateTempColor(temp);
+        updateLandscape(temp);
+};
+
+// Refactoring based on Adrian OH
+// const renderTemp = (temp) => {   // need to remove
+//     const temp = document.getElementById("temp-number");
+//     temp.textContent = state.currentTemp;
+//     updateTempColor(temp);
+//     updateLandscape(temp);
+
+
+// const increaseTemp = () => {
+//     state.currentTemp += 1;
+//     renderTemp(temp);
+// };    
+
 
 const setupTemperatureControls = () => {
     // Get references to DOM elements
-    const temp = document.getElementById("temp-number");
+    // these 3 lines create them but this function should actually update them
+    const temp = document.getElementById("temp-number"); 
     const increaseBtn = document.getElementById("increase-temp");
     const decreaseBtn = document.getElementById("decrease-temp");
-
+    
     // Increase temperature
     increaseBtn.addEventListener("click", () => {
-        tempState.currentTemp += 1;
+        state.currentTemp += 1;
         renderTemp(temp);
     });
     
     // Decrease temperature
     decreaseBtn.addEventListener("click", () => {
-        tempState.currentTemp -= 1;
+        state.currentTemp -= 1;
         renderTemp(temp);
     });
-
+    
     // Display temperature
     renderTemp(temp);
 };
@@ -74,12 +89,50 @@ const setupTemperatureControls = () => {
 ////////// WAVE 03 /////////////
 ////////////////////////////////
 
-const setupCityNameControls = () => {};
+// Get the references to DOM elements
+
+// defines small functions of event listener
+const updateCityName = (inputFieldValue, cityOutput) => {
+    cityOutput.textContent = inputFieldValue;
+};
+
+const setupCityName = () => {};
+    const inputField = document.getElementById("inputCity");
+    const cityOutput = document.getElementById("city-output");    
+
+    // we want to put these within registerEventHandler()
+    inputField.addEventListener('input', () => {  
+        updateCityName(inputField.value, cityOutput);
+    });
 
 
-const registerEventHandler = () => {
-    setupTemperatureControls();
-    setupCityNameControls();
+// const resetCityName = () => {
+    // const resetButton = document.getElementById("reset");
+    
+    // inputField.textContent.remove();
+    // };
+    
+    ////////////////////////////////
+    ////////// WAVE 04 /////////////
+    ////////////////////////////////
+    
+    ////////////////////////////////
+    ////////// WAVE 05 /////////////
+    ////////////////////////////////
+    
+    ////////////////////////////////
+    ////////// WAVE 06 /////////////
+    ////////////////////////////////
+    
+    
+    // Controller function which connects small functions to the event listeners
+    const registerEventHandler = () => {
+        // const increaseBtn = document.getElementById("increase-temp");
+        // increaseBtn.addEventListener("click", increaseTemp);
+
+        setupTemperatureControls();
+        setupCityName();
+        resetCityName();
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandler); 
