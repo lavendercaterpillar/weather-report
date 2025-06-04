@@ -90,27 +90,29 @@ const setupTemperatureControls = () => {
 ////////////////////////////////
 
 // Get the references to DOM elements
+const inputField = document.getElementById("inputCity");
+const cityOutput = document.getElementById("city-output");    
+const resetButton = document.getElementById("reset");
 
 // defines small functions of event listener
 const updateCityName = (inputFieldValue, cityOutput) => {
     cityOutput.textContent = inputFieldValue;
 };
 
-const setupCityName = () => {};
-    const inputField = document.getElementById("inputCity");
-    const cityOutput = document.getElementById("city-output");    
-
+const setupCityName = () => {
     // we want to put these within registerEventHandler()
     inputField.addEventListener('input', () => {  
         updateCityName(inputField.value, cityOutput);
     });
+};
 
-
-// const resetCityName = () => {
-    // const resetButton = document.getElementById("reset");
-    
-    // inputField.textContent.remove();
-    // };
+const resetCityName = (event) => {
+    resetButton.addEventListener('click', () => { 
+        cityOutput.textContent = "Seattle";
+        inputField.value = "";
+        event.preventDefault();
+    });
+};
     
     ////////////////////////////////
     ////////// WAVE 04 /////////////
@@ -127,8 +129,6 @@ const setupCityName = () => {};
     
     // Controller function which connects small functions to the event listeners
     const registerEventHandler = () => {
-        // const increaseBtn = document.getElementById("increase-temp");
-        // increaseBtn.addEventListener("click", increaseTemp);
 
         setupTemperatureControls();
         setupCityName();
