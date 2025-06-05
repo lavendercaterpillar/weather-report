@@ -1,8 +1,7 @@
 "user strict"
-const locationURL = 'http://127.0.0.1:5000/location'
-const weatherURL = 'http://127.0.0.1:5000/weather'
-// const locationURL = 'http://127.0.0.1:5000/proxy_bp/location'
-// const weatherURL = 'http://127.0.0.1:5000/proxy_bp/weather'
+const locationURL = 'http://127.0.0.1:5000/proxy_bp/location'
+const weatherURL = 'http://127.0.0.1:5000/proxy_bp/weather'
+
 
 // define a state variable that tracks all the values we need in the code
 const state = {  // call it state and add city name here
@@ -125,14 +124,14 @@ const setRealTimeTemp = () => {
 };
 
 const getLonLat = () => {
-    return axios.get('/location', {
+    return axios.get(locationURL, {
         params: {
         city: state.city
         }
     })
     .then(response => {
         const { lat, lon } = response.data[0];
-        return { lat, lon }
+        return { lat, lon } // {lat:lat, lon:lon}
     })
     .catch(error => {
         console.log(error);
@@ -143,7 +142,7 @@ const getRealTimeTemp = () => {
     const { lat, lon } = getLonLat();
 
     return axios
-        .get('/weather', {
+        .get(weatherURL, {
             params: {
                 lat: lat,
                 lon: lon,
