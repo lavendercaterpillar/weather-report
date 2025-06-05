@@ -3,8 +3,8 @@
 // define a state variable that tracks all the values we need in the code
 const state = {  // call it state and add city name here
     currentTemp: 70,
-    // city: 'Seattle',
-    // skySelect: 'cloudy'
+    city: 'Seattle',
+    skySelect: 'cloudy'
 };
 
 // Get references to DOM elements 
@@ -13,10 +13,10 @@ const state = {  // call it state and add city name here
 
 // Can be refactored to have 2 arguements (tempDisplay => color render, temp => ranges)
 const updateTempColor = (temp) => {   
-    const tempAsInt = parseInt(state.currentTemp)
 
+    const tempAsInt = parseInt(state.currentTemp)
+    temp.style.color = "red";
     if (tempAsInt >= 80) {
-        temp.style.color = "red";
     } else if (tempAsInt >= 70) {
         temp.style.color = "orange";
     } else if (tempAsInt >= 60) {
