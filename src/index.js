@@ -96,14 +96,16 @@ const inputField = document.getElementById('inputCity');
 const cityOutput = document.getElementById('city-output');    
 
 // defines small functions of event listener
-const updateCityName = (inputFieldValue, cityOutput) => {
-    cityOutput.textContent = inputFieldValue;
+const updateCityName = () => {
+    // cityOutput.textContent = inputFieldValue;
+    state.city = inputField.value;
+    cityOutput.textContent = state.city;
 };
 
 const setupCityName = () => {
     // we want to put this within registerEventHandler()
     inputField.addEventListener('input', () => {  
-        updateCityName(inputField.value, cityOutput);
+        updateCityName();
     });
 };
 
