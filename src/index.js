@@ -1,8 +1,8 @@
 "user strict"
-const axios = require('axios');
-
-const locationURL = 'http://127.0.0.1:5000/proxy_bp/location'
-const weatherURL = 'http://127.0.0.1:5000/proxy_bp/weather'
+const locationURL = 'http://127.0.0.1:5000/location'
+const weatherURL = 'http://127.0.0.1:5000/weather'
+// const locationURL = 'http://127.0.0.1:5000/proxy_bp/location'
+// const weatherURL = 'http://127.0.0.1:5000/proxy_bp/weather'
 
 // define a state variable that tracks all the values we need in the code
 const state = {  // call it state and add city name here
@@ -12,8 +12,6 @@ const state = {  // call it state and add city name here
 };
 
 // Get references to DOM elements 
-
-
 
 // Can be refactored to have 2 arguements (tempDisplay => color render, temp => ranges)
 const updateTempColor = (temp) => {   
@@ -44,47 +42,6 @@ const updateLandscape = (temp) => {
     } else {
         landscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
     };
-};
-
-const setRealTimeTemp = () => {
-    state.currentTemp = getRealTimeTemp();
-    renderTemp(state.currentTemp)
-    return
-};
-
-const getLonLat = () => {
-    return axios.get('/location', {
-        params: {
-        city: state.city
-        }
-    })
-    .then(response => {
-        const { lat, lon } = response.data[0];
-        return { lat, lon }
-    })
-    .catch(error => {
-        console.log(error);
-    });  
-        
-}
-const getRealTimeTemp = () => {
-    const { lat, lon } = getLonLat();
-
-    return axios
-        .get('/weather', {
-            params: {
-                lat: lat,
-                lon: lon,
-                format: 'json'
-            }
-        })
-        .then(response => {
-            const temp = response.data[0].current.temp;
-            return temp;
-        })
-        .catch(error => {
-            console.log(error);
-        });
 };
 
 // Refactor to have 2 arguement (tempDisplay, temp)
@@ -155,7 +112,52 @@ const setupCityName = () => {
 ////////////////////////////////
 ////////// WAVE 04 /////////////
 ////////////////////////////////
+const setRealTimeTemp = () => {
+    const realTimeTempButton = document.getElementById('real-time-temp');
+    const temp = document.getElementById("temp-number"); 
 
+    realTimeTempButton.addEventListener('click', () => {
+        state.currentTemp = getRealTimeTemp();
+        temp.textContent = state.currentTemp;
+        renderTemp(state.currentTemp);
+    return
+    });
+};
+
+const getLonLat = () => {
+    return axios.get('/location', {
+        params: {
+        city: state.city
+        }
+    })
+    .then(response => {
+        const { lat, lon } = response.data[0];
+        return { lat, lon }
+    })
+    .catch(error => {
+        console.log(error);
+    });  
+        
+}
+const getRealTimeTemp = () => {
+    const { lat, lon } = getLonLat();
+
+    return axios
+        .get('/weather', {
+            params: {
+                lat: lat,
+                lon: lon,
+                format: 'json'
+            }
+        })
+        .then(response => {
+            const temp = response.data[0].current.temp;
+            return temp;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
 ////////////////////////////////
 ////////// WAVE 05 /////////////
 ////////////////////////////////
@@ -195,11 +197,11 @@ const resetCityName = (event) => {
 };
 
 
-    
 // Controller function which connects small functions to the event listeners
 const registerEventHandler = () => {
 
     setupTemperatureControls();
+    setRealTimeTemp();
     setupCityName();
     resetCityName();
     setupSkyDisplay();
