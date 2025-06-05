@@ -45,9 +45,11 @@ const updateLandscape = (temp) => {
 
 // Refactor to have 2 arguement (tempDisplay, temp)
 const renderTemp = (temp) => {
-        temp.textContent = state.currentTemp;
-        updateTempColor(temp);
-        updateLandscape(temp);
+    console.log('renderTemp temp= ', temp)
+    console.log('currentTemp state= ', state.currentTemp)
+    temp.textContent = state.currentTemp;
+    updateTempColor(temp);
+    updateLandscape(temp);
 };
 
 // Refactoring based on Adrian OH
@@ -118,10 +120,11 @@ const setRealTimeTemp = () => {
     const temp = document.getElementById("temp-number"); 
 
     realTimeTempButton.addEventListener('click', () => {
+        // console.log('in realtime set, before get real time', state.currentTemp)
         state.currentTemp = getRealTimeTemp();
-
         temp.textContent = state.currentTemp;
-        renderTemp(state.currentTemp);
+        // console.log('in realtime set after real time, state of current temp', state.currentTemp)
+        renderTemp(temp);
     return
     });
 };
@@ -134,7 +137,7 @@ const getLonLat = () => {
     })
     .then(response => {
         const { lat, lon } = response.data[0];
-        return { lat, lon } // {lat:lat, lon:lon}
+        return { lat, lon } 
     })
     .catch(error => {
         console.log(error);
