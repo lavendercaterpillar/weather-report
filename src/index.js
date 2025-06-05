@@ -1,4 +1,8 @@
 "user strict"
+const axios = require('axios');
+
+const locationURL = 'http://127.0.0.1:5000/proxy_bp/location'
+const weatherURL = 'http://127.0.0.1:5000/proxy_bp/weather'
 
 // define a state variable that tracks all the values we need in the code
 const state = {  // call it state and add city name here
@@ -41,6 +45,33 @@ const updateLandscape = (temp) => {
         landscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
     };
 };
+
+const setRealTimeTemp = () => {
+    // call getLonLat
+    // realTimeTemp = pass lon lat values into getRealTimeTemp
+    // update state.currentTemp to realTimeTemp
+
+
+};
+
+const getLonLat = () => {
+    return axios.get('/location', {
+        params: {
+        city: state.city
+        }
+    })
+    .then(response => {
+        const { lat, lon } = response.data[0];
+        return { lat, lon }
+    })
+    .catch(error => {
+        console.log(error);
+    });  
+        
+}
+const getRealTimeTemp = () => {
+    return axios.get('/weather')
+}
 
 // Refactor to have 2 arguement (tempDisplay, temp)
 const renderTemp = (temp) => {
