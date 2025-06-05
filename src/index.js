@@ -3,7 +3,8 @@
 // define a state variable that tracks all the values we need in the code
 const state = {  // call it state and add city name here
     currentTemp: 70,
-    city: 'Seattle'
+    city: 'Seattle',
+    // skySelect: 'cloudy'
 };
 
 // Get references to DOM elements 
@@ -90,9 +91,9 @@ const setupTemperatureControls = () => {
 ////////////////////////////////
 
 // Get the references to DOM elements
-const inputField = document.getElementById("inputCity");
-const cityOutput = document.getElementById("city-output");    
-const resetButton = document.getElementById("reset");
+const inputField = document.getElementById('inputCity');
+const cityOutput = document.getElementById('city-output');    
+const resetButton = document.getElementById('reset');
 
 // defines small functions of event listener
 const updateCityName = (inputFieldValue, cityOutput) => {
@@ -100,7 +101,7 @@ const updateCityName = (inputFieldValue, cityOutput) => {
 };
 
 const setupCityName = () => {
-    // we want to put these within registerEventHandler()
+    // we want to put this within registerEventHandler()
     inputField.addEventListener('input', () => {  
         updateCityName(inputField.value, cityOutput);
     });
@@ -108,23 +109,44 @@ const setupCityName = () => {
 
 const resetCityName = (event) => {
     resetButton.addEventListener('click', () => { 
-        cityOutput.textContent = "Seattle";
-        inputField.value = "";
+        cityOutput.textContent = 'Seattle';
+        inputField.value = '';
         event.preventDefault();
     });
 };
     
-    ////////////////////////////////
-    ////////// WAVE 04 /////////////
-    ////////////////////////////////
+////////////////////////////////
+////////// WAVE 04 /////////////
+////////////////////////////////
+
+////////////////////////////////
+////////// WAVE 05 /////////////
+////////////////////////////////
+const skySelect = document.getElementById('sky-select')
+const skyDisplay = document.getElementById('sky-output')
+
+const updateSkyDisplay = (skySelect, skyDisplay) => {
     
-    ////////////////////////////////
-    ////////// WAVE 05 /////////////
-    ////////////////////////////////
-    
-    ////////////////////////////////
-    ////////// WAVE 06 /////////////
-    ////////////////////////////////
+    if (skySelect.value === 'sunny') {
+        skyDisplay.textContent = '☁️ ☁️ ☁️ ☀️ ☁️ ☁️';
+    } else if (skySelect.value === 'cloudy') {
+        skyDisplay.textContent = '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️';
+    } else if (skySelect.value === 'rainy') {
+        skyDisplay.textContent = '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧';
+    } else if (skySelect.value === 'snowy') {
+        skyDisplay.textContent = '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨';
+    };
+};
+
+const setupSkyDisplay = () => {
+    skySelect.addEventListener('change', () => {
+        updateSkyDisplay(skySelect, skyDisplay);
+    });
+};
+
+////////////////////////////////
+////////// WAVE 06 /////////////
+////////////////////////////////
     
     
     // Controller function which connects small functions to the event listeners
@@ -133,6 +155,7 @@ const resetCityName = (event) => {
         setupTemperatureControls();
         setupCityName();
         resetCityName();
+        setupSkyDisplay();
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandler); 
