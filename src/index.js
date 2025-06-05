@@ -192,9 +192,11 @@ const setupSkyDisplay = () => {
 ////////////////////////////////
 const resetButton = document.getElementById('reset');
 
-const resetCityName = (event) => {
-    resetButton.addEventListener('click', () => { 
-        cityOutput.textContent = 'Seattle';
+const resetCityName = () => {
+    resetButton.addEventListener('click', (event) => { 
+        // cityOutput.textContent = 'Seattle';
+        state.city = 'Seattle';
+        cityOutput.textContent = state.city;
         inputField.value = '';
         event.preventDefault();
     });
