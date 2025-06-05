@@ -117,6 +117,7 @@ const setRealTimeTemp = () => {
 
     realTimeTempButton.addEventListener('click', () => {
         state.currentTemp = getRealTimeTemp();
+        // state.currentTemp = getLonLat();
         temp.textContent = state.currentTemp;
         renderTemp(state.currentTemp);
     return
@@ -126,11 +127,12 @@ const setRealTimeTemp = () => {
 const getLonLat = () => {
     return axios.get(locationURL, {
         params: {
-        city: state.city
+            q: state.city
         }
     })
     .then(response => {
         const { lat, lon } = response.data[0];
+        console.log(response.data[0])
         return { lat, lon } // {lat:lat, lon:lon}
     })
     .catch(error => {
@@ -139,18 +141,19 @@ const getLonLat = () => {
         
 }
 const getRealTimeTemp = () => {
-    const { lat, lon } = getLonLat();
+    const result = getLonLat(); // promise
+    console.log('result = ',result);
 
     return axios
         .get(weatherURL, {
             params: {
-                lat: lat,
-                lon: lon,
-                format: 'json'
+                lat: lat,  // revised
+                lon: lon
             }
         })
         .then(response => {
             const temp = response.data[0].current.temp;
+            console.log('in .then() temp=',temp);
             return temp;
         })
         .catch(error => {
@@ -163,22 +166,24 @@ const getRealTimeTemp = () => {
 const skySelect = document.getElementById('sky-select')
 const skyDisplay = document.getElementById('sky-output')
 
-const updateSkyDisplay = (skySelect, skyDisplay) => {
-    
-    if (skySelect.value === 'sunny') {
+const updateSkyDisplay = () => {
+    const sky = state.skySelect;
+
+    if (sky === 'sunny') {
         skyDisplay.textContent = '☁️ ☁️ ☁️ ☀️ ☁️ ☁️';
-    } else if (skySelect.value === 'cloudy') {
+    } else if (sky === 'cloudy') {
         skyDisplay.textContent = '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️';
-    } else if (skySelect.value === 'rainy') {
+    } else if (sky === 'rainy') {
         skyDisplay.textContent = '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧';
-    } else if (skySelect.value === 'snowy') {
+    } else if (sky === 'snowy') {
         skyDisplay.textContent = '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨';
     };
 };
 
 const setupSkyDisplay = () => {
     skySelect.addEventListener('change', () => {
-        updateSkyDisplay(skySelect, skyDisplay);
+        state.skySelect = skySelect.value;
+        updateSkyDisplay();
     });
 };
 
