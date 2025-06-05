@@ -47,11 +47,9 @@ const updateLandscape = (temp) => {
 };
 
 const setRealTimeTemp = () => {
-    // call getLonLat
-    // realTimeTemp = pass lon lat values into getRealTimeTemp
-    // update state.currentTemp to realTimeTemp
-
-
+    state.currentTemp = getRealTimeTemp();
+    renderTemp(state.currentTemp)
+    return
 };
 
 const getLonLat = () => {
@@ -70,8 +68,24 @@ const getLonLat = () => {
         
 }
 const getRealTimeTemp = () => {
-    return axios.get('/weather')
-}
+    const { lat, lon } = getLonLat();
+
+    return axios
+        .get('/weather', {
+            params: {
+                lat: lat,
+                lon: lon,
+                format: 'json'
+            }
+        })
+        .then(response => {
+            const temp = response.data[0].current.temp;
+            return temp;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
 
 // Refactor to have 2 arguement (tempDisplay, temp)
 const renderTemp = (temp) => {
