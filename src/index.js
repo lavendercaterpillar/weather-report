@@ -96,14 +96,16 @@ const inputField = document.getElementById('inputCity');
 const cityOutput = document.getElementById('city-output');    
 
 // defines small functions of event listener
-const updateCityName = (inputFieldValue, cityOutput) => {
-    cityOutput.textContent = inputFieldValue;
+const updateCityName = () => {
+    // cityOutput.textContent = inputFieldValue;
+    state.city = inputField.value;
+    cityOutput.textContent = state.city;
 };
 
 const setupCityName = () => {
     // we want to put this within registerEventHandler()
     inputField.addEventListener('input', () => {  
-        updateCityName(inputField.value, cityOutput);
+        updateCityName();
     });
 };
 
@@ -117,7 +119,7 @@ const setRealTimeTemp = () => {
 
     realTimeTempButton.addEventListener('click', () => {
         state.currentTemp = getRealTimeTemp();
-        // state.currentTemp = getLonLat();
+
         temp.textContent = state.currentTemp;
         renderTemp(state.currentTemp);
     return
@@ -132,10 +134,6 @@ const getLonLat = () => {
     })
     .then(response => {
         const { lat, lon } = response.data[0];
-        // console.log(response.data[0])
-        // console.log(response.data[0].lat);
-        // console.log(response.data[0].lon);
-        // console.log({ lat, lon })
         return { lat, lon } // {lat:lat, lon:lon}
     })
     .catch(error => {
@@ -144,17 +142,14 @@ const getLonLat = () => {
         
 }
 const getRealTimeTemp = () => {
-    // const result = getLonLat();
-    // console.log('result = ',result); // this is a promise
     let promise = Promise.resolve();
+
     promise
     .then(() => {
         return getLonLat()
     })
     .then(response => {
         const { lat, lon } = response;
-        // console.log('lat= ', lat, 'lon=', lon)
-        // console.log(response);
         return axios.get(weatherURL, {
             params: {
                 lat: lat,
@@ -177,22 +172,24 @@ const getRealTimeTemp = () => {
 const skySelect = document.getElementById('sky-select')
 const skyDisplay = document.getElementById('sky-output')
 
-const updateSkyDisplay = (skySelect, skyDisplay) => {
-    
-    if (skySelect.value === 'sunny') {
+const updateSkyDisplay = () => {
+    const sky = state.skySelect;
+
+    if (sky === 'sunny') {
         skyDisplay.textContent = '☁️ ☁️ ☁️ ☀️ ☁️ ☁️';
-    } else if (skySelect.value === 'cloudy') {
+    } else if (sky === 'cloudy') {
         skyDisplay.textContent = '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️';
-    } else if (skySelect.value === 'rainy') {
+    } else if (sky === 'rainy') {
         skyDisplay.textContent = '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧';
-    } else if (skySelect.value === 'snowy') {
+    } else if (sky === 'snowy') {
         skyDisplay.textContent = '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨';
     };
 };
 
 const setupSkyDisplay = () => {
     skySelect.addEventListener('change', () => {
-        updateSkyDisplay(skySelect, skyDisplay);
+        state.skySelect = skySelect.value;
+        updateSkyDisplay();
     });
 };
 
@@ -201,9 +198,11 @@ const setupSkyDisplay = () => {
 ////////////////////////////////
 const resetButton = document.getElementById('reset');
 
-const resetCityName = (event) => {
-    resetButton.addEventListener('click', () => { 
-        cityOutput.textContent = 'Seattle';
+const resetCityName = () => {
+    resetButton.addEventListener('click', (event) => { 
+        // cityOutput.textContent = 'Seattle';
+        state.city = 'Seattle';
+        cityOutput.textContent = state.city;
         inputField.value = '';
         event.preventDefault();
     });
