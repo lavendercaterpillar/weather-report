@@ -1,6 +1,6 @@
 "user strict"
-const locationURL = 'http://127.0.0.1:5000/proxy_bp/location'
-const weatherURL = 'http://127.0.0.1:5000/proxy_bp/weather'
+const locationURL = 'http://127.0.0.1:5000/location'
+const weatherURL = 'http://127.0.0.1:5000/weather'
 
 
 // define a state variable that tracks all the values we need in the code
@@ -117,6 +117,7 @@ const setRealTimeTemp = () => {
 
     realTimeTempButton.addEventListener('click', () => {
         state.currentTemp = getRealTimeTemp();
+        // state.currentTemp = getLonLat();
         temp.textContent = state.currentTemp;
         renderTemp(state.currentTemp);
     return
@@ -126,11 +127,15 @@ const setRealTimeTemp = () => {
 const getLonLat = () => {
     return axios.get(locationURL, {
         params: {
-        city: state.city
+            q: state.city
         }
     })
     .then(response => {
         const { lat, lon } = response.data[0];
+        // console.log(response.data[0])
+        // console.log(response.data[0].lat);
+        // console.log(response.data[0].lon);
+        // console.log({ lat, lon })
         return { lat, lon } // {lat:lat, lon:lon}
     })
     .catch(error => {
@@ -139,23 +144,32 @@ const getLonLat = () => {
         
 }
 const getRealTimeTemp = () => {
-    const { lat, lon } = getLonLat();
-
-    return axios
-        .get(weatherURL, {
+    // const result = getLonLat();
+    // console.log('result = ',result); // this is a promise
+    let promise = Promise.resolve();
+    promise
+    .then(() => {
+        return getLonLat()
+    })
+    .then(response => {
+        const { lat, lon } = response;
+        // console.log('lat= ', lat, 'lon=', lon)
+        // console.log(response);
+        return axios.get(weatherURL, {
             params: {
                 lat: lat,
-                lon: lon,
-                format: 'json'
+                lon: lon
             }
         })
-        .then(response => {
-            const temp = response.data[0].current.temp;
-            return temp;
+    })
+    .then(response => {
+        const temp = response.data.main.temp;
+        console.log('temp= ', temp);
+        return temp;
         })
-        .catch(error => {
-            console.log(error);
-        });
+    .catch(error => {
+        console.log(error);
+    });
 };
 ////////////////////////////////
 ////////// WAVE 05 /////////////
