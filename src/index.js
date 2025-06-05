@@ -3,7 +3,7 @@
 // define a state variable that tracks all the values we need in the code
 const state = {  // call it state and add city name here
     currentTemp: 70,
-    city: 'Seattle',
+    // city: 'Seattle',
     // skySelect: 'cloudy'
 };
 
@@ -93,7 +93,6 @@ const setupTemperatureControls = () => {
 // Get the references to DOM elements
 const inputField = document.getElementById('inputCity');
 const cityOutput = document.getElementById('city-output');    
-const resetButton = document.getElementById('reset');
 
 // defines small functions of event listener
 const updateCityName = (inputFieldValue, cityOutput) => {
@@ -107,13 +106,6 @@ const setupCityName = () => {
     });
 };
 
-const resetCityName = (event) => {
-    resetButton.addEventListener('click', () => { 
-        cityOutput.textContent = 'Seattle';
-        inputField.value = '';
-        event.preventDefault();
-    });
-};
     
 ////////////////////////////////
 ////////// WAVE 04 /////////////
@@ -147,15 +139,25 @@ const setupSkyDisplay = () => {
 ////////////////////////////////
 ////////// WAVE 06 /////////////
 ////////////////////////////////
-    
-    
-    // Controller function which connects small functions to the event listeners
-    const registerEventHandler = () => {
+const resetButton = document.getElementById('reset');
 
-        setupTemperatureControls();
-        setupCityName();
-        resetCityName();
-        setupSkyDisplay();
+const resetCityName = (event) => {
+    resetButton.addEventListener('click', () => { 
+        cityOutput.textContent = 'Seattle';
+        inputField.value = '';
+        event.preventDefault();
+    });
+};
+
+
+    
+// Controller function which connects small functions to the event listeners
+const registerEventHandler = () => {
+
+    setupTemperatureControls();
+    setupCityName();
+    resetCityName();
+    setupSkyDisplay();
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandler); 
