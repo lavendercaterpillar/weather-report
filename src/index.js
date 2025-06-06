@@ -115,19 +115,6 @@ const setupCityName = () => {
 ////////////////////////////////
 ////////// WAVE 04 /////////////
 ////////////////////////////////
-const setRealTimeTemp = () => {
-    const realTimeTempButton = document.getElementById('real-time-temp');
-    const temp = document.getElementById("temp-number"); 
-
-    realTimeTempButton.addEventListener('click', () => {
-        // console.log('in realtime set, before get real time', state.currentTemp)
-        state.currentTemp = getRealTimeTemp();
-        temp.textContent = state.currentTemp;
-        // console.log('in realtime set after real time, state of current temp', state.currentTemp)
-        renderTemp(temp);
-    return
-    });
-};
 
 const getLonLat = () => {
     return axios.get(locationURL, {
@@ -141,33 +128,66 @@ const getLonLat = () => {
     })
     .catch(error => {
         console.log(error);
-    });  
-        
+    });   
 }
-const getRealTimeTemp = () => {
-    let promise = Promise.resolve();
 
-    promise
-    .then(() => {
-        return getLonLat()
-    })
-    .then(response => {
-        const { lat, lon } = response;
-        return axios.get(weatherURL, {
-            params: {
-                lat: lat,
-                lon: lon
-            }
-        })
-    })
-    .then(response => {
-        const temp = response.data.main.temp;
-        console.log('temp= ', temp);
-        return temp;
-        })
-    .catch(error => {
-        console.log(error);
+
+const setRealTimeTemp = () => {
+    const realTimeTempButton = document.getElementById('real-time-temp');
+    const temp = document.getElementById("temp-number"); 
+
+    realTimeTempButton.addEventListener('click', () => {
+        getRealTimeTemp()
+            .then(realTemp =>{
+                state.currentTemp =realTemp;
+                temp.textContent = state.currentTemp;
+                renderTemp(temp);
+            })
+            .catch(error => {
+                console.log("Error fetching real-time temperature:", error);
+            });
+
+    //         // console.log('in realtime set, before get real time', state.currentTemp)
+    //         state.currentTemp = getRealTimeTemp();
+    //         temp.textContent = state.currentTemp;
+    //         // console.log('in realtime set after real time, state of current temp', state.currentTemp)
+    //         renderTemp(temp);
+    // return
     });
+};
+
+
+const getRealTimeTemp = () => {
+    // let promise = Promise.resolve();
+    // promise
+
+    return getLonLat()
+        .then(({lat, lon}) => {
+            return axios.get(weatherURL, {
+                params: { lat: lat, lon: lon }
+            })
+        })
+
+        // .then(response => {
+        //     const { lat, lon } = response;
+        //     return axios.get(weatherURL, {
+        //         params: {
+        //             lat: lat,
+        //             lon: lon
+        //         }
+        //     })
+        // })
+
+        .then(response => {
+            const tempK = response.data.main.temp;
+            const tempF = ((tempK - 273.15) * 9/5 + 32).toFixed(1); // Rounded to 1 decimal
+            console.log('temp= ', tempF);
+            return tempF;
+        })
+
+        .catch(error => {
+            console.log(error);
+        });
 };
 ////////////////////////////////
 ////////// WAVE 05 /////////////
