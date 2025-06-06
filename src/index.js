@@ -120,10 +120,10 @@ const setRealTimeTemp = () => {
     const temp = document.getElementById("temp-number"); 
 
     realTimeTempButton.addEventListener('click', () => {
-        // console.log('in realtime set, before get real time', state.currentTemp)
+        console.log('in realtime set, before get real time', state.currentTemp)
         state.currentTemp = getRealTimeTemp();
         temp.textContent = state.currentTemp;
-        // console.log('in realtime set after real time, state of current temp', state.currentTemp)
+        console.log('in realtime set after real time, state of current temp', state.currentTemp)
         renderTemp(temp);
     return
     });
@@ -153,6 +153,8 @@ const getRealTimeTemp = () => {
     })
     .then(response => {
         const { lat, lon } = response;
+        console.log('realtime response= ', response);
+
         return axios.get(weatherURL, {
             params: {
                 lat: lat,
