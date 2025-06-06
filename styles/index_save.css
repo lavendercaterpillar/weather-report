@@ -33,52 +33,50 @@ body {
 
 /* Left Column: Temp, Sky, City Search */
 #report > section:first-child {
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
     width: 40%;
-    border-radius: 8px;
 }
 
 /* Right Column: Weather Garden */
 #report > section:last-child {
     width: 60%;
-    background-color: #e0e0e0; 
+    background-color: #e0e0e0; /* gray background */
     padding: 1.5rem;
     border-radius: 8px;
 }
 
 /* Shared Panel Styles */
-/* #report section div {
+#report section div {
     background-color: white;
     border-radius: 8px;
     padding: 1rem;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-} */
+}
 
 /* Temperature Panel */
-/* #temperature {
+#temperature {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}  */
+}
 
-/* #temp-btns {
-    display: flex;
-}  */
-
-/* #temperature > section {
+#temperature > section {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-} */
+}
 
 /* Center the real-time-temp button vertically */
-/* #real-time-temp {
+#real-time-temp {
     align-self: center;
-} */
+}
 
 
 /* Consistent Button Styles */
+button#real-time-temp,
 button#reset {
     background-color: #007bff;
     color: white;

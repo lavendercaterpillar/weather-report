@@ -18,21 +18,23 @@
         </span>
     </header>
     <main style="background-color: rgb(0, 136, 255);">
-        <section id="report">
-            <section>
-                <div id="temperature">
-                    <h3>Temperature</h3>
-                    <section>
+        <section class="container-fluid p-5" id="report">
+            <section class="container col col-6 text-bg-light">
+                <div class="row row-6" id="temperature">
+                    <h3 class="m-3">Temperature</h3>
+                </div>
+                <div class="continer d-flex flex-row m-3 col" id="temp-btns">
+                    <section class="col-6" id="temp-buttons">
                         <button type="button" class="btn btn-primary" id="increase-temp">+</button>
-                        <p id="temp-number"></p>
+                        <p class="m-1" id="temp-number"></p>
                         <button id="decrease-temp" class="btn btn-primary">-</button>
                     </section>
-                    <button id="real-time-temp">Get Realtime Temperature</button>
+                    <button class="col-6 btn btn-primary" id="real-time-temp">Get Realtime Temperature</button>
                 </div>
 
-                <div id="sky">
+                <div class="m-3" id="sky">
                     <h3>Sky</h3>
-                    <select id="sky-select" name="skyState">
+                    <select class="m-1" id="sky-select" name="skyState">
                         <option value="sunny">Sunny</option>
                         <option value="cloudy" selected>Cloudy</option>
                         <option value="rainy">Rainy</option>
@@ -40,7 +42,7 @@
                     </select>
                 </div> 
 
-                <div id="city-search">
+                <div class="m-3" id="city-search">
                     <h3>City Name</h3>
                     <form class="row g-3">
                         <div class="col-auto">
@@ -53,7 +55,7 @@
                 </div>
             </section>
 
-            <section>
+            <section class="col col-6 text-bg-light">
                 <h3>Weather Garden</h3>
                 <div id="sky-output">☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️</div>  <!-- could be any img -->
                 <div id="landscape"></div>
