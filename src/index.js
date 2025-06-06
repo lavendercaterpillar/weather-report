@@ -10,9 +10,8 @@ const state = {  // call it state and add city name here
     skySelect: 'cloudy'
 };
 
-// Get references to DOM elements 
 
-// Can be refactored to have 2 arguements (tempDisplay => color render, temp => ranges)
+// defines small functions of event listener
 const updateTempColor = (temp) => {   
 
     const tempAsInt = parseInt(state.currentTemp)
@@ -43,7 +42,6 @@ const updateLandscape = (temp) => {
     };
 };
 
-// Refactor to have 2 arguement (tempDisplay, temp)
 const renderTemp = (temp) => {
     console.log('renderTemp temp= ', temp)
     console.log('currentTemp state= ', state.currentTemp)
@@ -51,19 +49,6 @@ const renderTemp = (temp) => {
     updateTempColor(temp);
     updateLandscape(temp);
 };
-
-// Refactoring based on Adrian OH
-// const renderTemp = (temp) => {   // need to remove
-//     const temp = document.getElementById("temp-number");
-//     temp.textContent = state.currentTemp;
-//     updateTempColor(temp);
-//     updateLandscape(temp);
-
-
-// const increaseTemp = () => {
-//     state.currentTemp += 1;
-//     renderTemp(temp);
-// };    
 
 
 const setupTemperatureControls = () => {
